@@ -6,7 +6,9 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "helmet": "^3.21.1",
-    "nodemon": "^1.19.3"
+    "knex": "^0.19.5",
+    "nodemon": "^1.19.3",
+    "sqlite3": "^4.1.0"
   },
   "devDependencies": {},
   "scripts": {
