@@ -1,11 +1,12 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 
+
 const Users = require("./users-model");
 
 const router = express.Router();
 
-router.get("/", (req,res) => {
+router.get("/", restricted, (req,res) => {
   Users.findUsers()
     .then(users => res.status(200).json(users));
 });
@@ -27,6 +28,7 @@ router.post('/login', (req,res) => {
       Users.findUser(req.body.username)
         .then(user => {
           if (user && bcrypt.compareSync(req.body.password, user.password)) {
+            req.session.user = user;
             res.status(201).json({username: user.username});
           } else {
             errorMsg(res, 500, "Incorrect credentials");
@@ -56,6 +58,14 @@ function validateRegister(req,res,next) {
 
 function errorMsg(res, code, msg) {
   res.status(code).json({error: msg});
+}
+
+function restricted(req, res, next) {
+  if (req.session && req.session.user) {
+    next();
+  } else {
+    res.status(401).json({ message: 'YOU SHALL NOT PASS' });
+  }
 }
 
 module.exports = router;
