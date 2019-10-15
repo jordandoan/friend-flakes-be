@@ -17,7 +17,7 @@ router.post('/register', validateRegister, (req,res) => {
   req.body.password = hash;
   Users.register(req.body)
     .then(id => res.status(201).json(id))
-    .catch(err => errorMsg(res, 500, "Error registering user"));
+    .catch(err => errorMsg(res, 500, "Error registering user, try a different username"));
 });
 
 router.post('/login', (req,res) => {
@@ -27,7 +27,7 @@ router.post('/login', (req,res) => {
       Users.findUser(req.body.username)
         .then(user => {
           if (user && bcrypt.compareSync(req.body.password, user.password)) {
-            res.status(201).json({message:"Succesfully logged in!"});
+            res.status(201).json({username: user.username});
           } else {
             errorMsg(res, 500, "Incorrect credentials");
           }
