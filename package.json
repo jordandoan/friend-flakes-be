@@ -1,0 +1,26 @@
+{
+  "name": "friend-flakes-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "helmet": "^3.21.1",
+    "nodemon": "^1.19.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordandoan/friend-flakes-be.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordandoan/friend-flakes-be/issues"
+  },
+  "homepage": "https://github.com/jordandoan/friend-flakes-be#readme"
+}
