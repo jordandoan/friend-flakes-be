@@ -1,9 +1,8 @@
 const db = require("../../data/dbconfig");
 
 module.exports = {
-  register,
   findUsers,
-  findUser
+  getFriends
 }
 
 function findUsers() {

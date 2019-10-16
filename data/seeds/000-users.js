@@ -10,7 +10,6 @@ exports.seed = function(knex) {
         {username:"testuser2", password:bcrypt.hashSync("pass", 12), first_name: "Jordan"},
         {username:"testuser3", password:bcrypt.hashSync("pass", 12), first_name: "Jordan"},
         {username:"testuser4", password:bcrypt.hashSync("pass", 12), first_name: "Jordan"},
-
       ]);
     });
 };
