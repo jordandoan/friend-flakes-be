@@ -13,5 +13,7 @@ server.use(cors());
 
 server.use("/api/auth", authRoutes);
 server.use("/api/users", userRoutes);
-
+server.get("/", (req,res) => {
+  res.send("Welcome to the root!");
+})
 module.exports = server;
