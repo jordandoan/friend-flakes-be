@@ -11,10 +11,10 @@ function findUsers() {
 
 function getFriends(id) {
   return db('friends')
-    .where({first: id})
-    .orWhere({second: id})
-    .innerjoin('users', 'users.id', 'friends.first')
-    .select('users.username as requester')
-    .join('users as u', 'u.id', 'friends.second')
-    .select('u.username as requested');
+    .where({request_from: id})
+    .orWhere({request_to: id})
+    .join('users', 'users.id', 'friends.request_from')
+    .select('users.username as request_by')
+    .join('users as u', 'u.id', 'friends.request_to')
+    .select('u.username as request_to', 'friends.accepted');
 }
