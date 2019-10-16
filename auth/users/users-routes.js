@@ -1,8 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-
+const jwt = require("jsonwebtoken");
 
 const Users = require("./users-model");
+const secrets = require("../../secrets/secrets");
 
 const router = express.Router();
 
@@ -28,8 +29,8 @@ router.post('/login', (req,res) => {
       Users.findUser(req.body.username)
         .then(user => {
           if (user && bcrypt.compareSync(req.body.password, user.password)) {
-            req.session.user = user;
-            res.status(201).json({username: user.username});
+            const token = generateToken(user);
+            res.status(201).json({token: token});
           } else {
             errorMsg(res, 500, "Incorrect credentials");
           }
@@ -42,6 +43,10 @@ router.post('/login', (req,res) => {
     errorMsg(res, 400, "Please provide body");
   }
 })
+
+function errorMsg(res, code, msg) {
+  res.status(code).json({error: msg});
+}
 
 function validateRegister(req,res,next) {
   user = req.body;
@@ -56,16 +61,30 @@ function validateRegister(req,res,next) {
   }
 }
 
-function errorMsg(res, code, msg) {
-  res.status(code).json({error: msg});
+function restricted(req, res, next) {
+  const token = req.headers.authorization;  
+  jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+    if (err) {
+      res.status(400).json({error: "Invalid token"})
+    } else {
+      req.decoded = decodedToken;
+      next();
+    }
+  })
 }
 
-function restricted(req, res, next) {
-  if (req.session && req.session.user) {
-    next();
-  } else {
-    res.status(401).json({ message: 'YOU SHALL NOT PASS' });
-  }
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username,
+  };
+
+  const options = {
+    expiresIn: '1d', // show other available options in the library's documentation
+  };
+
+  // extract the secret away so it can be required and used where needed
+  return jwt.sign(payload, secrets.jwtSecret, options); // this method is synchronous
 }
 
 module.exports = router;
