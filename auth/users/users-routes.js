@@ -3,14 +3,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const Users = require("./users-model");
-const secrets = require("../../secrets/secrets");
+const secrets = require("../../secrets");
+const helpers = require("../../helpers");
 
 const router = express.Router();
-
-router.get("/", restricted, (req,res) => {
-  Users.findUsers()
-    .then(users => res.status(200).json(users));
-});
 
 router.post('/register', validateRegister, (req,res) => {
   req.body.username = req.body.username.toLowerCase();
@@ -19,7 +15,7 @@ router.post('/register', validateRegister, (req,res) => {
   req.body.password = hash;
   Users.register(req.body)
     .then(id => res.status(201).json(id))
-    .catch(err => errorMsg(res, 500, "Error registering user, try a different username"));
+    .catch(err => helpers.errorMsg(res, 500, "Error registering user, try a different username"));
 });
 
 router.post('/login', (req,res) => {
@@ -32,45 +28,29 @@ router.post('/login', (req,res) => {
             const token = generateToken(user);
             res.status(201).json({token: token});
           } else {
-            errorMsg(res, 500, "Incorrect credentials");
+            helpers.errorMsg(res, 500, "Incorrect credentials");
           }
         })
-        .catch(err => errorMsg(res, 500, "Error logging in"));
+        .catch(err => helpers.errorMsg(res, 500, "Error logging in"));
     } else {
-      errorMsg(res, 400, "Please provide credentials");
+      helpers.errorMsg(res, 400, "Please provide credentials");
     }
   } else {
-    errorMsg(res, 400, "Please provide body");
+    helpers.errorMsg(res, 400, "Please provide body");
   }
 })
-
-function errorMsg(res, code, msg) {
-  res.status(code).json({error: msg});
-}
 
 function validateRegister(req,res,next) {
   user = req.body;
   if (user) {
     if (!user.username || !user.password || !user.first_name) {
-      errorMsg(res, 400, "Please provide a username, password, and first name");
+      helpers.errorMsg(res, 400, "Please provide a username, password, and first name");
     } else {
       next();
     }
   } else {
-    errorMsg(res, 500, "Please provide body");
+    helpers.errorMsg(res, 500, "Please provide body");
   }
-}
-
-function restricted(req, res, next) {
-  const token = req.headers.authorization;  
-  jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
-    if (err) {
-      res.status(400).json({error: "Invalid token"})
-    } else {
-      req.decoded = decodedToken;
-      next();
-    }
-  })
 }
 
 function generateToken(user) {
