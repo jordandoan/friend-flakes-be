@@ -1,3 +1,3 @@
 module.exports = {
-  jwtSecret: "ffat20LetsGoNext",
-}
+  jwtSecret: process.env.JWT_SECRET || 'chickennugget',
+};
