@@ -1,10 +1,9 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 
 const Users = require("./users-model");
 const helpers = require("../../helpers");
-const router = express.Router();
 
+const router = express.Router();
 
 router.get("/", helpers.restricted, (req,res) => {
   Users.findUsers()
@@ -102,6 +101,7 @@ async function findRequest(req, res, next) {
     helpers.errorMsg(res, 400, "Friend request does not exist")
   }
 }
+
 function ifRequestExists(req, res, next) {
   const frReq = req.body;
   Users.findRequest(frReq)
