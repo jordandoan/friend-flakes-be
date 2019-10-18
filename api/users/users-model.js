@@ -32,9 +32,9 @@ function getFriends(id) {
     .where({request_from: id})
     .orWhere({request_to: id})
     .join('users', 'users.id', 'friends.request_from')
-    .select('users.username as request_from')
+    .select('users.username as request_from', 'users.first_name as rf_fn' ,'users.last_name as rf_ln')
     .join('users as u', 'u.id', 'friends.request_to')
-    .select('u.username as request_to', 'friends.accepted');
+    .select('u.username as request_to', 'friends.accepted', 'u.first_name as rt_fn' ,'u.last_name as rt_ln');
 }
 
 function addRequest(req) {

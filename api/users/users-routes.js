@@ -13,12 +13,31 @@ router.get("/", helpers.restricted, (req,res) => {
 router.get("/friends", helpers.restricted, (req, res) => {
   Users.getFriends(req.user.id)
     .then(friends => {
-      let filteredArray = friends.map(friend => {
+      let friends_list = [];
+      let received_requests = [];
+      let sent_requests = [];
+      friends.forEach(friend => {
+        const rf_name = (friend.rf_fn + " " + (friend.rf_ln || "")).trim();
+        const rt_name = (friend.rt_fn + " " + (friend.rt_ln || "")).trim();
         if (friend.accepted) {
-          return (friend.request_from == req.user.username ? friend.request_to : friend.request_from)
+          let user = {username: "", name: ""};
+          if (friend.request_from == req.user.username) { 
+            user.username = friend.request_to;
+            user.name = rt_name;
+          } else {
+            user.username = friend.request_from;
+            user.name = rf_name;
+          }
+          friends_list.push(user);
+        } else {
+          if (friend.request_to == req.user.username) {
+            received_requests.push({username: friend.request_from, name: rf_name});
+          } else {
+            sent_requests.push({username: friend.request_to, name: rt_name});
+          }
         }
       })
-      res.status(200).json({friend_list: filteredArray});
+      res.status(200).json({friends_list, received_requests, sent_requests});
     });
 });
 
