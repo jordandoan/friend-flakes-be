@@ -55,7 +55,7 @@ function validateRegister(req,res,next) {
 
 function generateToken(user) {
   const payload = {
-    subject: user.id,
+    id: user.id,
     username: user.username,
   };
 

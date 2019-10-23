@@ -5,13 +5,13 @@ const helpers = require("../../helpers");
 
 const router = express.Router();
 
-router.get("/", helpers.restricted, (req,res) => {
+router.get("/", helpers.verifyToken, (req,res) => {
   Users.findUsers()
     .then(users => res.status(200).json(users));
 });
 
-router.get("/friends", helpers.restricted, (req, res) => {
-  Users.getFriends(req.user.id)
+router.get("/friends", helpers.verifyToken, (req, res) => {
+  Users.getFriends(req.decoded.id)
     .then(friends => {
       let friends_list = [];
       let received_requests = [];
@@ -21,7 +21,7 @@ router.get("/friends", helpers.restricted, (req, res) => {
         const rt_name = (friend.rt_fn + " " + (friend.rt_ln || "")).trim();
         if (friend.accepted) {
           let user = {username: "", name: ""};
-          if (friend.request_from == req.user.username) { 
+          if (friend.request_from == req.decoded.username) { 
             user.username = friend.request_to;
             user.name = rt_name;
           } else {
@@ -30,7 +30,7 @@ router.get("/friends", helpers.restricted, (req, res) => {
           }
           friends_list.push(user);
         } else {
-          if (friend.request_to == req.user.username) {
+          if (friend.request_to == req.decoded.username) {
             received_requests.push({username: friend.request_from, name: rf_name});
           } else {
             sent_requests.push({username: friend.request_to, name: rt_name});
