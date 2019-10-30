@@ -20,6 +20,6 @@ server.get("/", (req,res) => {
 server.use("/api/auth", authRoutes);
 server.use(helpers.verifyToken);
 server.use("/api/users", userRoutes);
-server.use("/api/users", eventRoutes);
+server.use("/api/events", eventRoutes);
 
 module.exports = server;

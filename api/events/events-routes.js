@@ -12,7 +12,7 @@ router.get('/', (req,res) => {
     .catch(err => helpers.errorMsg(res, 500, "Error retrieving from database"))
 });
 
-router.get('/:id', findEvent, (req,res) => {
+router.get('/:id', eHelpers.findEvent, (req,res) => {
   res.status(200).json(req.found)
 })
 
