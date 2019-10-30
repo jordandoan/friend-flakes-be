@@ -13,7 +13,7 @@ describe('testing auth endpoints', () => {
             })
     })
     it('returns a token: login successful', () => {
-        return request(server).post('/api/auth/login').send({ username: "testuser", password: "pass" })
+        return request(server).post('/api/auth/login').send({ username: "testtest", password: "password" })
             .then(res => {
                 token = res.body.token;
                 console.log(res.body);
