@@ -33,8 +33,25 @@ describe('adding events', () => {
   it('returns status code 201', () => {
     return request(server).post('/api/events').set({authorization: token}).send({title: 'Friendsgiving', date:'10/29/19', points: 5})
       .then(res => {
-        console.log(res.body);
         return expect(res.status).toBe(201)
+      })
+  })
+  it('returns a truthy length of events', () => {
+    return request(server).get('/api/events').set({authorization: token})
+      .then(res => {
+        return expect(res.body.events.length).toBeTruthy()
+      })
+  })
+  it('returns records', () => {
+    return request(server).put('/api/events/1').set({authorization: token}).send({title: 'Friendsgiving', date:'10/29/19', points: 10})
+      .then(res => {
+        return expect(res.body.records).toBeTruthy()
+      })
+  })
+  it('returns records', () => {
+    return request(server).delete('/api/events/1').set({authorization: token})
+      .then(res => {
+        return expect(res.body.records).toBeTruthy()
       })
   })
 })
