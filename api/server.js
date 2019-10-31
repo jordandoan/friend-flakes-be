@@ -4,6 +4,8 @@ const cors = require("cors");
 
 const authRoutes = require("../auth/auth-routes");
 const userRoutes = require("./users/users-routes");
+const eventRoutes = require("./events/events-routes");
+const helpers = require("../helpers");
 
 const server = express();
 
@@ -11,9 +13,13 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-server.use("/api/auth", authRoutes);
-server.use("/api/users", userRoutes);
 server.get("/", (req,res) => {
   res.send("Welcome to the root!");
 })
+
+server.use("/api/auth", authRoutes);
+server.use(helpers.verifyToken);
+server.use("/api/users", userRoutes);
+server.use("/api/events", eventRoutes);
+
 module.exports = server;

@@ -26,7 +26,7 @@ router.post('/login', (req,res) => {
         .then(user => {
           if (user && bcrypt.compareSync(req.body.password, user.password)) {
             const token = generateToken(user);
-            res.status(201).json({token: token});
+            res.status(201).json({token});
           } else {
             helpers.errorMsg(res, 500, "Incorrect credentials");
           }
@@ -55,12 +55,12 @@ function validateRegister(req,res,next) {
 
 function generateToken(user) {
   const payload = {
-    subject: user.id,
+    id: user.id,
     username: user.username,
   };
 
   const options = {
-    expiresIn: '1d', // show other available options in the library's documentation
+    expiresIn: '7d', // show other available options in the library's documentation
   };
 
   // extract the secret away so it can be required and used where needed
