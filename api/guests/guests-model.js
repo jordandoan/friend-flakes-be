@@ -1,7 +1,10 @@
 const db = require("../../data/dbconfig");
 
 module.exports = {
-  getEventGuests
+  getEventGuests,
+  addGuest,
+  updateGuest,
+  removeGuest
 }
 
 function getEventGuests(event_id) {
@@ -9,4 +12,23 @@ function getEventGuests(event_id) {
     .where({event_id})
     .join('users as u', 'u.id', 'eg.user_id')
     .select('eg.event_id', 'u.username', 'eg.attended')
+}
+
+function addGuest(guest) {
+  return db('event_guests')
+    .insert(guest)
+}
+
+function updateGuest(guest) {
+  return db('event_guests')
+    .update(guest)
+    .where({event_id: guest.event_id})
+    .where({user_id: guest.user_id})
+}
+
+function removeGuest(event_id, user_id)
+  return db('event_guests')
+    .del()
+    .where({event_id})
+    .where({user_id})
 }

@@ -1,9 +1,11 @@
 const helpers = require("../../helpers");
 const Events = require("../events/events-model");
+const Users = require("../users/users-model");
 
 module.exports = {
   findEvent,
-  validAction
+  validAction,
+  findUser
 }
 
 function findEvent(req,res,next) {
@@ -20,12 +22,25 @@ function findEvent(req,res,next) {
 }
 
 function findUser(req, res, next) {
-
+  let username = req.body.username || req.params.id.username
+  username = username.toLowerCase();
+  Users.findUserByName(username)
+    .then(user => {
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        helpers.errorMsg(res, 404, "Cannot find user");
+      }
+    })
+    .catch(err => helpers.errorMsg(res, 500, "Error accessing database."));
 }
 
 function validAction(req,res,next) { 
+  // Checks user id with owner
   if (req.found.user_id == req.decoded.id) {
     next();
+  // Checks if user you are sending is your user
   } else if (req.body.username.toLowerCase() == req.decoded.username) {
     next();
   } else {
