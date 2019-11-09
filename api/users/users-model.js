@@ -12,7 +12,7 @@ module.exports = {
 
 function findUserByName(username) {
   return db('users')
-    .where({username: username})
+    .where({username})
     .first()
 }
 

@@ -4,7 +4,8 @@ exports.up = function(knex) {
     tbl.integer('user_id', 128)
       .notNullable()
       .references('id')
-      .inTable('users');
+      .inTable('users')
+      .onDelete('CASCADE')
     tbl.string('title', 128)
       .notNullable();
     tbl.integer('points')

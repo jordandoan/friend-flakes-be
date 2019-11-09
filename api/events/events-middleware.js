@@ -34,6 +34,7 @@ function findEvent(req,res,next) {
     })
     .catch(err => helpers.errorMsg(res, 500, "Error accessing database."));
 }
+
 function isOwner(req,res,next) { 
   if (req.found.user_id == req.decoded.id) {
     next();

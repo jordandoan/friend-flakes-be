@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRoutes = require("../auth/auth-routes");
 const userRoutes = require("./users/users-routes");
 const eventRoutes = require("./events/events-routes");
+const guestRoutes = require("./guests/guests-routes");
 const helpers = require("../helpers");
 
 const server = express();
@@ -21,5 +22,6 @@ server.use("/api/auth", authRoutes);
 server.use(helpers.verifyToken);
 server.use("/api/users", userRoutes);
 server.use("/api/events", eventRoutes);
+server.use("/api/guests", guestRoutes);
 
 module.exports = server;
