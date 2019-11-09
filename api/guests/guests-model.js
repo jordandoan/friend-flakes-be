@@ -4,7 +4,8 @@ module.exports = {
   getEventGuests,
   addGuest,
   updateGuest,
-  removeGuest
+  removeGuest,
+  findInvite
 }
 
 function getEventGuests(event_id) {
@@ -12,6 +13,13 @@ function getEventGuests(event_id) {
     .where({event_id})
     .join('users as u', 'u.id', 'eg.user_id')
     .select('eg.event_id', 'u.username', 'eg.attended')
+}
+
+function findInvite(event_id, user_id) {
+  return db('event_guests')
+    .where({event_id})
+    .where({user_id})
+    .first()
 }
 
 function addGuest(guest) {

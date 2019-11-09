@@ -3,11 +3,13 @@ exports.up = function(knex) {
     tbl.integer('event_id')
       .notNullable()
       .references('id')
-      .inTable('events');
+      .inTable('events')
+      .onDelete('CASCADE');
     tbl.integer('user_id', 128)
       .notNullable()
       .references('id')
-      .inTable('users');
+      .inTable('users')
+      .onDelete('CASCADE');
     tbl.boolean('attended', 128)
       .notNullable();
     tbl.primary(['event_id', 'user_id'])

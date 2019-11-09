@@ -28,8 +28,27 @@ describe('handles guest endpoints', () => {
       })
   })
 
-  it('deletes guests', () => {
-    return request(server).delete('/api/guests/1/testuser').set({authorization: token})
+  // it('deletes guests', () => {
+  //   return request(server).delete('/api/guests/1/testuser').set({authorization: token})
+  //     .then(res => {
+  //       return expect(res.body.message).toBeTruthy();
+  //     })
+  // })
+
+  it('adds self to an event', async () => {
+    return request(server).post("/api/guests/2").set({authorization: token}).send({username: "testtest", attended:true})
+      .then(res => {
+        return expect(res.body.message).toBeTruthy();
+      })
+  })
+  it('edits', async () => {
+    return request(server).put("/api/guests/2/testtest").set({authorization: token}).send({attended:false})
+      .then(res => {
+        return expect(res.body.message).toBeTruthy();
+      })
+  })
+  it('delete from an event', async () => {
+    return request(server).delete("/api/guests/2/testtest").set({authorization: token})
       .then(res => {
         return expect(res.body.message).toBeTruthy();
       })
@@ -38,11 +57,43 @@ describe('handles guest endpoints', () => {
 
 
 
-// describe('handles failures', () => {
-//   it('ERROR', () => {
-//     return request(server).post("/api/guests/1").set({authorization: token}).send({username: "testuser", attended:true})
-//       .then(res => {
-//         return expect(res.body.error).toBeTruthy();
-//       })
-//   })
-// })
+describe('handles failures', () => {
+  it('Adding already existing invite', () => {
+    return request(server).post("/api/guests/1").set({authorization: token}).send({username: "testuser", attended:true})
+      .then(res => {
+        return expect(res.body.error).toBeTruthy();
+      })
+  })
+
+  it('Inviting someone to other event', () => {
+    return request(server).post("/api/guests/2").set({authorization: token}).send({username: "testuser", attended:true})
+      .then(res => {
+        return expect(res.body.error).toBeTruthy();
+      })
+  })
+  it('missing body', () => {
+    return request(server).post("/api/guests/1").set({authorization: token}).send({username: "testuser"})
+      .then(res => {
+        console.log(res.body.error);
+        return expect(res.body.error).toBeTruthy();
+      })
+  })
+  it('Editing someone from other event', () => {
+    return request(server).put("/api/guests/2/testuser2").set({authorization: token}).send({attended:false})
+      .then(res => {
+        return expect(res.body.error).toBeTruthy();
+      })
+  })
+  it('Deleting someone from other event', () => {
+    return request(server).put("/api/guests/2/testuser2").set({authorization: token})
+      .then(res => {
+        return expect(res.body.error).toBeTruthy();
+      })
+  })
+  it('Find nonexistent event', () => {
+    return request(server).put("/api/guests/1/testuser2").set({authorization: token}).send({attended:false})
+      .then(res => {
+        return expect(res.body.error).toBeTruthy();
+      })
+  })
+})
