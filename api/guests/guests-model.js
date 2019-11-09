@@ -26,7 +26,7 @@ function updateGuest(guest) {
     .where({user_id: guest.user_id})
 }
 
-function removeGuest(event_id, user_id)
+function removeGuest(event_id, user_id) {
   return db('event_guests')
     .del()
     .where({event_id})

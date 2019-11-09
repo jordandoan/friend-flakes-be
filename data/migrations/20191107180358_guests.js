@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-  return knex.schema.createTable('events_guests', tbl => {
+  return knex.schema.createTable('event_guests', tbl => {
     tbl.integer('event_id')
       .notNullable()
       .references('id')
@@ -16,5 +16,5 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('events_guests')
+    .dropTableIfExists('event_guests')
 };

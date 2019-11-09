@@ -22,7 +22,7 @@ function findEvent(req,res,next) {
 }
 
 function findUser(req, res, next) {
-  let username = req.body.username || req.params.id.username
+  let username = req.body.username || req.params.username
   username = username.toLowerCase();
   Users.findUserByName(username)
     .then(user => {
