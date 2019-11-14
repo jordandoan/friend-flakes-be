@@ -12,7 +12,7 @@ function getEventGuests(event_id) {
   return db('event_guests as eg')
     .where({event_id})
     .join('users as u', 'u.id', 'eg.user_id')
-    .select('eg.event_id', 'u.username', 'eg.attended')
+    .select('u.username', 'u.first_name', 'u.last_name', 'eg.attended')
 }
 
 function findInvite(event_id, user_id) {

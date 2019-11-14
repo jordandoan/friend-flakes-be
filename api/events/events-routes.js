@@ -1,6 +1,7 @@
 const express = require("express");
 
 const Events = require("./events-model");
+const Guests = require("../guests/guests-model");
 const eHelpers = require("./events-middleware");
 const helpers = require("../../helpers");
 
@@ -12,8 +13,29 @@ router.get('/', (req,res) => {
     .catch(err => helpers.errorMsg(res, 500, "Error retrieving from database"))
 });
 
-router.get('/:id', eHelpers.findEvent, (req,res) => {
-  res.status(200).json(req.found)
+router.get('/:id', (req,res) => {
+  Events.getInfobyId(req.params.id)
+    .then(event => {
+      if (event) {
+        let {first_name, last_name, ...rest} = event;
+        last_name = " " || last_name;
+        rest.full_name = (first_name + " "  + last_name).trim();
+        Guests.getEventGuests(req.params.id)
+          .then(guests => {
+            let newGuests = guests.map(guest => {
+              let {first_name, last_name, ...rest} = guest;          
+              last_name = " " || last_name;
+              rest.full_name = (first_name + " "  + last_name).trim();
+              return rest
+            })
+            res.json({...rest, guests: newGuests})
+          })
+          .catch()
+      }  else {
+        helpers.errorMsg(res, 404, "Cannot find event with specified ID.");
+      }
+    })
+    .catch(err => helpers.errorMsg(res, 500, "Error retrieving from database"))
 })
 
 router.post('/', eHelpers.validateEvent, (req,res) => {
