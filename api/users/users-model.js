@@ -4,6 +4,7 @@ module.exports = {
   findUserByName,
   findUsers,
   getFriends,
+  findUserEvents,
   findRequest,
   addRequest,
   acceptRequest,
@@ -20,6 +21,16 @@ function findUsers() {
   return db('users').select('users.username');
 }
 
+function findUserEvents(id) {
+  return db('event_guests as eg')
+    .whereRaw(`eg.user_id == ${id}`)
+    .join('events as e', 'e.id','eg.event_id')
+    .join('users as u', 'u.id', 'e.user_id')
+    .select('e.id', 'e.title', 'e.user_id', 
+      'u.username as created_by', 'u.first_name', 'u.last_name',
+      'e.description', 'e.points', 'eg.attended', 'e.date'
+      )
+}
 function findRequest(req) {
   return db('friends')
     .where({request_from: req.request_from})

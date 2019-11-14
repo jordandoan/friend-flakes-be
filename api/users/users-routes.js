@@ -1,6 +1,7 @@
 const express = require("express");
 
 const Users = require("./users-model");
+const Guests = require("../../api/guests/guests-model");
 const fHelpers = require('./users-middleware');
 const helpers = require("../../helpers");
 
@@ -10,6 +11,31 @@ router.get("/", helpers.verifyToken, (req, res) => {
   Users.findUsers()
     .then(users => res.status(200).json(users))
     .catch(err => helpers.errorMsg(res, 500, "Error retreiving from database"));
+});
+
+router.get("/:username", helpers.verifyToken, fHelpers.verifyUser, (req,res) => {
+  Users.findUserByName(req.params.username)
+    .then(user => {
+      const {password, ...rest} = user;
+      if (user) {
+        Users.findUserEvents(user.id)
+        .then(async events => {
+          // const newEvents = {...events}
+          const newEvents = await events.map((event) => {
+            return Guests.getEventGuests(event.id)
+              .then(guests => { 
+                return {...event, people: guests.length}
+              });
+          })
+          Promise.all(newEvents)
+            .then(newEvents => {
+              res.json({...rest, events: newEvents})
+            })
+        })
+      } else {
+        helpers.errorMsg(res, 404, "Cannot find user.")
+      }
+    }) 
 });
 
 router.get("/friends", helpers.verifyToken, (req, res) => {

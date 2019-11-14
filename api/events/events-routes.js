@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', (req,res) => {
   Events.getAll()
     .then(events => res.status(200).json({events}))
-    .catch(err => helpers.errorMsg(res, 500, "Error retrieving from database"))
+    .catch(err => helpers.errorMsg(res, 500, "Error retrieving from database"));
 });
 
 router.get('/:id', (req,res) => {
