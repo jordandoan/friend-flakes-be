@@ -16,6 +16,7 @@ function verifyToken(req,res,next) {
     if (err) {
       res.status(400).json({error: "Invalid token"})
     } else {
+
       req.decoded = decodedToken;
       next();
     }

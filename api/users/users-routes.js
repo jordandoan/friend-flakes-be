@@ -7,13 +7,13 @@ const helpers = require("../../helpers");
 
 const router = express.Router();
 
-router.get("/", helpers.verifyToken, (req, res) => {
+router.get("/", (req, res) => {
   Users.findUsers()
     .then(users => res.status(200).json(users))
     .catch(err => helpers.errorMsg(res, 500, "Error retreiving from database"));
 });
 
-router.get("/:username", helpers.verifyToken, fHelpers.verifyUser, (req,res) => {
+router.get("/info/:username", fHelpers.verifyUser, (req,res) => {
   Users.findUserByName(req.params.username)
     .then(user => {
       const {password, ...rest} = user;
@@ -38,7 +38,7 @@ router.get("/:username", helpers.verifyToken, fHelpers.verifyUser, (req,res) => 
     }) 
 });
 
-router.get("/friends", helpers.verifyToken, (req, res) => {
+router.get("/friends", (req, res) => {
   Users.getFriends(req.decoded.id)
     .then(friends => {
       let friends_list = [];
@@ -76,7 +76,7 @@ router.post("/friends", [fHelpers.checkUsers, fHelpers.noRequests], (req, res) =
 });
 
 // Note: Should I check for accepted friend already?
-router.put("/friends/:request_to/:request_from", [helpers.verifyToken, fHelpers.authAdd, fHelpers.checkUsers, fHelpers.ifRequestExists], (req, res) => {
+router.put("/friends/:request_to/:request_from", [fHelpers.authAdd, fHelpers.checkUsers, fHelpers.ifRequestExists], (req, res) => {
   if (req.body.accepted) {
     Users.acceptRequest(req.body)
       .then(records => {
@@ -88,7 +88,7 @@ router.put("/friends/:request_to/:request_from", [helpers.verifyToken, fHelpers.
   }
 });
 
-router.delete("/friends/:username1/:username2", [helpers.verifyToken, fHelpers.authDelete, fHelpers.checkUsers, fHelpers.findRequest], (req, res) => {
+router.delete("/friends/:username1/:username2", [fHelpers.authDelete, fHelpers.checkUsers, fHelpers.findRequest], (req, res) => {
   Users.remove(req.body)
     .then(records => res.status(201).json({message:"Successfully deleted!"}))
     .catch(err => helpers.errorMsg(res, 500, "Error modifying database")); 
