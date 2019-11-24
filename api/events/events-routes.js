@@ -30,7 +30,7 @@ router.get('/:id', (req,res) => {
             })
             res.json({...rest, guests: newGuests})
           })
-          .catch(res, 500, "Error accessing data base");
+          .catch(err => helpers.errorMsg(res, 500, "Error accessing data base"));
       }  else {
         helpers.errorMsg(res, 404, "Cannot find event with specified ID.");
       }

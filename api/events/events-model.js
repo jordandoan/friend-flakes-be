@@ -31,7 +31,11 @@ function getInfobyId(id) {
 function add(event) {
   return db('events')
     .insert(event)
-    .then(ids => ids[0])
+    .then(async ids => 
+      await db('event_guests')
+        .insert({event_id: ids[0], user_id: event.user_id, attended: true})
+          .then(filler => ids[0])
+    )
 }
 
 function edit(id, event) {
