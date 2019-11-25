@@ -40,7 +40,7 @@ router.get('/:id', (req,res) => {
 
 router.post('/', eHelpers.validateEvent, (req,res) => {
   Events.add({user_id: req.decoded.id, ...req.event})
-    .then(id => res.status(201).json({id}))
+    .then(id => res.status(201).json({id, user_id: req.decoded.id}))
     .catch(err => helpers.errorMsg(res, 500, "Error uploading to database"))
 })
 
