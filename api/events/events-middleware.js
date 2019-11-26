@@ -8,8 +8,8 @@ module.exports = {
 }
 
 function validateEvent(req,res,next) {
-  const {date, title, points} = req.body;
-  const event = {date, title, points};
+  const {date, title, points, description} = req.body;
+  const event = {date, title, points, description};
   if (event) {
     if (event.title && event.date && event.points) {
       req.event = event;

@@ -1,4 +1,5 @@
 const Users = require("./users-model");
+const helpers = require("../../helpers");
 
 module.exports = {
   authAdd,
@@ -7,8 +8,16 @@ module.exports = {
   findRequest,
   ifRequestExists,
   noRequests,
+  verifyUser,
 }
 
+function verifyUser(req,res, next) {
+  if (req.params.username == req.decoded.username) {
+    next();
+  } else {
+    helpers.errorMsg(res, 403, "You are not authorized to perform this action");
+  }
+}
 function authAdd(req,res,next) {
   const decodedToken = req.decoded;
   if (decodedToken.username == req.params.request_to) {

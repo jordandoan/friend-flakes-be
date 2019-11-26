@@ -19,4 +19,7 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists('event_guests')
+    // .dropTableIfExists('events')
+    // .dropTableIfExists('friends')
+    // .dropTableIfExists('users')
 };
