@@ -23,7 +23,7 @@ function findUsers() {
 
 function findUserEvents(id) {
   return db('event_guests as eg')
-    .whereRaw(`eg.user_id == ${id}`)
+    .whereRaw(`eg.user_id = ${id}`)
     .join('events as e', 'e.id','eg.event_id')
     .join('users as u', 'u.id', 'e.user_id')
     .select('e.id', 'e.title', 'e.user_id', 

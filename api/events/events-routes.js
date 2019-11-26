@@ -15,12 +15,12 @@ router.get('/', (req,res) => {
 
 router.get('/:id', (req,res) => {
   Events.getInfobyId(req.params.id)
-    .then(event => {
+    .then(async event => {
       if (event) {
         let {first_name, last_name, ...rest} = event;
         last_name = " " || last_name;
         rest.full_name = (first_name + " "  + last_name).trim();
-        Guests.getEventGuests(req.params.id)
+        await Guests.getEventGuests(req.params.id)
           .then(guests => {
             let newGuests = guests.map(guest => {
               let {first_name, last_name, ...rest} = guest;          
@@ -28,7 +28,7 @@ router.get('/:id', (req,res) => {
               rest.full_name = (first_name + " "  + last_name).trim();
               return rest
             })
-            res.json({...rest, guests: newGuests})
+            return res.status(200).json({...rest, guests: newGuests})
           })
           .catch(err => helpers.errorMsg(res, 500, "Error accessing data base"));
       }  else {
