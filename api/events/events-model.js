@@ -21,7 +21,7 @@ function getById(id) {
 
 function getInfobyId(id) {
   return db('events as e')
-    .whereRaw(`e.id == ${id}`)
+    .whereRaw(`e.id = ${id}`)
     .join('users as u','u.id','e.user_id')
     .select('e.id', 'u.id as user_id', 'u.username as created_by', 'u.first_name', 'u.last_name', 'e.title','e.description','e.date','e.points')
     .then(events => events[0])
