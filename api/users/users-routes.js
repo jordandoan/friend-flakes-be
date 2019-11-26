@@ -36,6 +36,7 @@ router.get("/info/:username", fHelpers.verifyUser, (req,res) => {
         helpers.errorMsg(res, 404, "Cannot find user.")
       }
     }) 
+    .catch(err => helpers.errorMsg(res, 500, "Error accessing database."));
 });
 
 router.get("/friends", (req, res) => {

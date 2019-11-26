@@ -16,7 +16,7 @@ function getAll() {
 function getById(id) {
   return db('events')
     .where({id})
-    .first(); 
+    .then(events => events[0])
 }
 
 function getInfobyId(id) {
@@ -24,8 +24,7 @@ function getInfobyId(id) {
     .whereRaw(`e.id == ${id}`)
     .join('users as u','u.id','e.user_id')
     .select('e.id', 'u.id as user_id', 'u.username as created_by', 'u.first_name', 'u.last_name', 'e.title','e.description','e.date','e.points')
-    .first();
-
+    .then(events => events[0])
 }
 
 function add(event) {

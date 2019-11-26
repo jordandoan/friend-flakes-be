@@ -7,6 +7,7 @@ module.exports = {
 
 function register(user) {
   return db('users').insert(user)
+    .returning('id')
     .then(id => {return {id:id[0]}});
 }
 

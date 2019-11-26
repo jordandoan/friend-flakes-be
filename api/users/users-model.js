@@ -14,7 +14,7 @@ module.exports = {
 function findUserByName(username) {
   return db('users')
     .where({username})
-    .first()
+    .then(users => users[0]);
 }
 
 function findUsers() {
