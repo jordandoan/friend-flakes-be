@@ -25,6 +25,7 @@ function findInvite(event_id, user_id) {
 function addGuest(guest) {
   return db('event_guests')
     .insert(guest)
+    .returning('event_id')
 }
 
 function updateGuest(guest) {

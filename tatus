@@ -1,0 +1,62 @@
+[33md64c70a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mheroku/master[m[33m)[m HEAD@{0}: commit: more model fixing for conversion to postgres
+[33me88ae3d[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: commit: fixed the queries
+[33m69a02df[m HEAD@{2}: commit: Change from == to = in getInfoById
+[33m1c9d9d9[m HEAD@{3}: commit: Small changes to models
+[33m89ff6c9[m HEAD@{4}: commit: Edited seed files
+[33me11ebd6[m HEAD@{5}: commit: Changed more migration stuff
+[33m2e5cdeb[m HEAD@{6}: commit: updated schema for friend_requests, added id
+[33mb9ce241[m HEAD@{7}: commit: Changed type of id
+[33m114b29c[m HEAD@{8}: pull origin master: Fast-forward
+[33ma9483c7[m HEAD@{9}: pull: Fast-forward
+[33m99adef1[m HEAD@{10}: checkout: moving from jordan to master
+[33mded3eae[m[33m ([m[1;31morigin/jordan[m[33m, [m[1;32mjordan[m[33m)[m HEAD@{11}: commit: Installed pg
+[33m7ef10f9[m HEAD@{12}: commit: Preparing for production deployment
+[33mb7dcfc0[m HEAD@{13}: commit: Db has been modified
+[33mc5ad1aa[m HEAD@{14}: commit: temp revision to post event return
+[33m53e1924[m HEAD@{15}: pull origin jordan: Fast-forward
+[33m13b697c[m HEAD@{16}: commit: Updated route for info on user
+[33m029c830[m HEAD@{17}: commit: Created shape for user info
+[33m900716b[m HEAD@{18}: commit: Added guest info to getEventById
+[33mc37d637[m HEAD@{19}: commit: Finish testing guests, ready to work on front end
+[33mf923a4a[m HEAD@{20}: commit: Initial tests for guest endpoints, need to test cases where event is not owned by user
+[33me41def9[m HEAD@{21}: commit: Finished end points for guests, need to test
+[33mf1500c4[m HEAD@{22}: commit: Started on guests endpoints and middleware
+[33mfb0fd87[m HEAD@{23}: commit: Testing done for events endpoints
+[33mb22de0b[m HEAD@{24}: commit: Tested adding event
+[33m533fe0b[m HEAD@{25}: commit: Got log in test to work
+[33m20f3e26[m HEAD@{26}: commit: setting up testing environment
+[33m5d3646d[m HEAD@{27}: commit: Added event routes to server
+[33m416e47e[m HEAD@{28}: commit: Factored middleware into its own file for users
+[33m275775a[m HEAD@{29}: commit: Added middleware to events router, cleaned up code
+[33m26de897[m HEAD@{30}: commit: created migration for events table
+[33m10bd00c[m HEAD@{31}: commit: Removed restricted helper function
+[33m3284167[m HEAD@{32}: commit: Refactored data sent on GET friends endpoint
+[33m15abe20[m HEAD@{33}: commit: Edited spacing
+[33m8055167[m HEAD@{34}: commit: PUT and DELETE requests for friend list implemented
+[33m5fdacb9[m HEAD@{35}: commit: Implemented sending friend requests
+[33m2551cf8[m HEAD@{36}: pull origin master: Fast-forward
+[33mb994af6[m HEAD@{37}: checkout: moving from test to jordan
+[33m0810d59[m[33m ([m[1;31morigin/test[m[33m, [m[1;32mtest[m[33m)[m HEAD@{38}: checkout: moving from jordan to test
+[33mb994af6[m HEAD@{39}: commit: Using .env file
+[33m0810d59[m[33m ([m[1;31morigin/test[m[33m, [m[1;32mtest[m[33m)[m HEAD@{40}: pull origin test: Fast-forward
+[33mf308763[m HEAD@{41}: checkout: moving from test to jordan
+[33m0810d59[m[33m ([m[1;31morigin/test[m[33m, [m[1;32mtest[m[33m)[m HEAD@{42}: commit: able to get friends list for user
+[33m3f46c61[m HEAD@{43}: commit (merge): Merge branch 'jordan' of https://github.com/jordandoan/friend-flakes-be into test
+[33m2e3f43f[m HEAD@{44}: commit: testing friends
+[33md54fbab[m HEAD@{45}: checkout: moving from jordan to test
+[33mf308763[m HEAD@{46}: commit: Fixed errors. Also created helpers function
+[33mbddbd8e[m HEAD@{47}: commit: Refactored authorization routes and user info routes
+[33mefc8737[m HEAD@{48}: commit: updated gitignore
+[33m8328007[m HEAD@{49}: commit: Using tokens instead of cookies
+[33md54fbab[m HEAD@{50}: reset: moving to HEAD
+[33md54fbab[m HEAD@{51}: checkout: moving from test to jordan
+[33md54fbab[m HEAD@{52}: checkout: moving from jordan to test
+[33md54fbab[m HEAD@{53}: commit: Added cookies
+[33mcace58c[m HEAD@{54}: commit: Added cors and express session
+[33me41dd9c[m HEAD@{55}: commit: Implemented onboarding
+[33m99adef1[m HEAD@{56}: checkout: moving from master to jordan
+[33m99adef1[m HEAD@{57}: commit: Added more packages
+[33m2854e94[m HEAD@{58}: commit: Added more packages
+[33mdc20203[m HEAD@{59}: commit: edited gitignore
+[33m95a66c0[m HEAD@{60}: commit: Initial packages installed
+[33ma3c6435[m HEAD@{61}: clone: from https://github.com/jordandoan/friend-flakes-be.git
