@@ -1,13 +1,16 @@
 exports.up = function(knex) {
   return knex.schema.createTable('friends', tbl => {
+    tbl.increments();
     tbl.integer('request_from', 128)
       .notNullable()
+      .unsigned()
       .references('id')
       .inTable('users')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
     tbl.integer('request_to', 128)
       .notNullable()
+      .unsigned()
       .references('id')
       .inTable('users')
       .onUpdate('CASCADE')
